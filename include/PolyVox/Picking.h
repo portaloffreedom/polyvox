@@ -34,9 +34,10 @@ namespace PolyVox
 	 */
 	struct PickResult
 	{
-		PickResult() : didHit(false) {}
+		PickResult() : didHit(false), hasPreviousVoxel(false) {}
 		bool didHit; ///< Did the picking operation hit anything
 		Vector3DInt32 hitVoxel; ///< The location of the solid voxel it hit
+		bool hasPreviousVoxel; //< Whether there is a previous voxel (there may not be if the raycast started in a solid object).
 		Vector3DInt32 previousVoxel; ///< The location of the voxel before the one it hit
 	};
 

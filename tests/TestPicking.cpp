@@ -59,6 +59,7 @@ void TestPicking::testExecute()
 
 	QCOMPARE(resultHit.didHit, true);
 	QCOMPARE(resultHit.hitVoxel, Vector3DInt32((uVolumeSideLength / 2) + 1, uVolumeSideLength / 2, uVolumeSideLength / 2));
+	QCOMPARE(resultHit.hasPreviousVoxel, true);
 	QCOMPARE(resultHit.previousVoxel, Vector3DInt32((uVolumeSideLength / 2), uVolumeSideLength / 2, uVolumeSideLength / 2));
 
 	PickResult resultMiss = pickVoxel(&volData, Vector3DFloat(0, uVolumeSideLength / 2, uVolumeSideLength / 2), Vector3DFloat(uVolumeSideLength / 2, uVolumeSideLength, uVolumeSideLength), emptyVoxelExample);

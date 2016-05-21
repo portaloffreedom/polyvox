@@ -56,6 +56,7 @@ namespace PolyVox
 					return false;
 				}
 
+				m_result.hasPreviousVoxel = true;
 				m_result.previousVoxel = sampler.getPosition();
 
 				return true;
