@@ -28,12 +28,12 @@ const char* __str__() {
 //This macro will be called in the volume interface files to define the various volume types.
 %define VOLUMETYPES(class)
 %template(class ## int8) PolyVox::class<int8_t>;
-//%template(class ## int16) PolyVox::class<int16_t>;
-//%template(class ## int32) PolyVox::class<int32_t>;
-//%template(class ## uint8) PolyVox::class<uint8_t>;
-//%template(class ## uint16) PolyVox::class<uint16_t>;
-//%template(class ## uint32) PolyVox::class<uint32_t>;
-//%template(class ## float) PolyVox::class<float>;
+%template(class ## int16) PolyVox::class<int16_t>;
+%template(class ## int32) PolyVox::class<int32_t>;
+%template(class ## uint8) PolyVox::class<uint8_t>;
+%template(class ## uint16) PolyVox::class<uint16_t>;
+%template(class ## uint32) PolyVox::class<uint32_t>;
+%template(class ## float) PolyVox::class<float>;
 %enddef
 
 //Template based on voxel type
@@ -69,6 +69,7 @@ EXTRACTOR(shortname, RawVolume)
 %ignore *::operator<<; //This is covered by STR()
 #endif
 
+%include "TypeDef.i"
 %include "stdint.i"
 %include "std_vector.i"
 %include "Vector.i"
@@ -83,11 +84,11 @@ EXTRACTOR(shortname, RawVolume)
 //%include "MinizBlockCompressor.i"
 //%include "RLEBlockCompressor.i"
 %include "BaseVolume.i"
-//%include "RawVolume.i"
+%include "RawVolume.i"
 //%include "PagedVolume.i"
 //%include "VertexTypes.i"
-//%include "SurfaceMesh.i"
-////%include "MarchingCubesSurfaceExtractor.i"
-////%include "CubicSurfaceExtractor.i"
+%include "SurfaceMesh.i"
+%include "MarchingCubesSurfaceExtractor.i"
+%include "CubicSurfaceExtractor.i"
 //%include "Raycast.i"
 //%include "Picking.i"

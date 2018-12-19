@@ -55,10 +55,11 @@ if(ENABLE_BINDINGS)
 			SET_PROPERTY(TARGET ${SWIG_MODULE_PolyVoxCorePython_REAL_NAME} PROPERTY FOLDER "Bindings")
 		endif()
 		
-		set(SWIG_MODULE_PolyVoxCoreCSharp_EXTRA_FLAGS "-dllimport;PolyVoxCoreCSharp") #This _should_ be inside UseSWIG.cmake - http://www.cmake.org/Bug/view.php?id=13814
-		swig_add_module(PolyVoxCoreCSharp csharp PolyVoxCore.i)
-		swig_link_libraries(PolyVoxCoreCSharp)
-		SET_PROPERTY(TARGET ${SWIG_MODULE_PolyVoxCoreCSharp_REAL_NAME} PROPERTY FOLDER "Bindings")
+		#TODO C# bindings are broken, fix them if you want
+		# set(SWIG_MODULE_PolyVoxCoreCSharp_EXTRA_FLAGS "-dllimport;PolyVoxCoreCSharp") #This _should_ be inside UseSWIG.cmake - http://www.cmake.org/Bug/view.php?id=13814
+		# swig_add_module(PolyVoxCoreCSharp csharp PolyVoxCore.i)
+		# swig_link_libraries(PolyVoxCoreCSharp)
+		# SET_PROPERTY(TARGET ${SWIG_MODULE_PolyVoxCoreCSharp_REAL_NAME} PROPERTY FOLDER "Bindings")
 	else()
 		set(BUILD_BINDINGS OFF CACHE BOOL "Will the bindings be built" FORCE)
 	endif()

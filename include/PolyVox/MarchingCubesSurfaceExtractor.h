@@ -71,6 +71,12 @@ namespace PolyVox
 	/// Generates a mesh from the voxel data using the Marching Cubes algorithm, placing the result into a user-provided Mesh.
 	template< typename VolumeType, typename MeshType, typename ControllerType = DefaultMarchingCubesController<typename VolumeType::VoxelType> >
 	void extractMarchingCubesMeshCustom(VolumeType* volData, Region region, MeshType* result, ControllerType controller = ControllerType());
+
+	/// Generates a cubic-style mesh from the voxel data, placing the result into a user-provided Mesh.
+	template<typename VolumeType>
+	PolyVox::Mesh<PolyVox::MarchingCubesVertex<typename VolumeType::VoxelType> > extractMarchingCubesMeshDefaultController(VolumeType* volData, PolyVox::Region region) {
+		return extractMarchingCubesMesh(volData, region, DefaultMarchingCubesController<typename VolumeType::VoxelType>());
+	}
 }
 
 #include "MarchingCubesSurfaceExtractor.inl"

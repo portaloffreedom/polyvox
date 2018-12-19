@@ -70,6 +70,12 @@ namespace PolyVox
 	/// Generates a cubic-style mesh from the voxel data, placing the result into a user-provided Mesh.
 	template<typename VolumeType, typename IsQuadNeeded = DefaultIsQuadNeeded<typename VolumeType::VoxelType> >
 	Mesh<CubicVertex<typename VolumeType::VoxelType> > extractCubicMesh(VolumeType* volData, Region region, IsQuadNeeded isQuadNeeded = IsQuadNeeded(), bool bMergeQuads = true);
+
+	/// Generates a cubic-style mesh from the voxel data, placing the result into a user-provided Mesh.
+	template<typename VolumeType>
+	PolyVox::Mesh<PolyVox::CubicVertex<typename VolumeType::VoxelType> > extractCubicMeshDefaultQuad(VolumeType* volData, PolyVox::Region region, bool bMergeQuads = true) {
+		return extractCubicMesh(volData, region, DefaultIsQuadNeeded<typename VolumeType::VoxelType>(), bMergeQuads);
+	}
 	
 }
 
