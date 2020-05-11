@@ -5,12 +5,16 @@
 #define __attribute__(x) //Silence DEPRECATED errors
 
 //This macro allows us to use Python properties on our classes
-%define PROPERTY(type,name,getter,setter)
-%extend type {
+%define PROPERTY(TYPE,NAME,GETTER,SETTER)
+%extend TYPE {
 	%pythoncode %{
-		__swig_getmethods__["name"] = getter
-		__swig_setmethods__["name"] = setter
-		if _newclass: name = property(getter, setter)
+		@property
+		def NAME(self):
+			return self.GETTER()
+		
+		@NAME.setter
+		def NAME(self, value) -> "void":
+			self.SETTER(value)
 	%}
 };
 %enddef
