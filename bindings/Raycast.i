@@ -56,6 +56,6 @@ PolyVox::RaycastResult raycastWithEndpointsPython(VolumeType* volData, const Pol
 template<typename VolumeType, typename Callback>
 PolyVox::RaycastResult raycastWithEndpointsPython(VolumeType* volData, const PolyVox::Vector3DFloat& v3dStart, const PolyVox::Vector3DFloat& v3dEnd, PyObject *callback);
 
-%template(raycastWithEndpointsSimpleVolumeuint8) raycastWithEndpointsPython<PolyVox::SimpleVolume<uint8_t>, PyCallback<PolyVox::SimpleVolume<uint8_t> > >;
+%template(raycastWithEndpointsRawVolumeuint8) raycastWithEndpointsPython<PolyVox::RawVolume<uint8_t>, PyCallback<PolyVox::RawVolume<uint8_t> > >;
 
 #endif

@@ -233,7 +233,7 @@ namespace std
 	template <>
 	struct hash<PolyVox::Vector3DInt32>
 	{
-		std::size_t operator()(const PolyVox::Vector3DInt32& vec) const
+		std::size_t operator()(const PolyVox::Vector3DInt32& vec) const noexcept
 		{
 			return ((vec.getX() & 0xFF)) | ((vec.getY() & 0xFF) << 8) | ((vec.getZ() & 0xFF) << 16);
 		}

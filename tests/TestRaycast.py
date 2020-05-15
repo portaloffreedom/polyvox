@@ -24,8 +24,6 @@
 ################################################################################
 
 import sys
-sys.path.append("../library/bindings/")
-
 import unittest
 import PolyVoxCore
 
@@ -37,15 +35,15 @@ class TestSurfaceExtractor(unittest.TestCase):
 		
 		#Create a small volume
 		r = PolyVoxCore.Region(PolyVoxCore.Vector3Dint32_t(0,0,0), PolyVoxCore.Vector3Dint32_t(31,31,31))
-		self.vol = PolyVoxCore.SimpleVolumeuint8(r)
+		self.vol = PolyVoxCore.RawVolumeuint8(r)
 		#Set one single voxel to have a reasonably high density
-		self.vol.setVoxelAt(PolyVoxCore.Vector3Dint32_t(5, 5, 5), 200)
+		self.vol.setVoxel(PolyVoxCore.Vector3Dint32_t(5, 5, 5), 200)
 	
 	def test_hit_voxel(self):
-		self.assertEqual(PolyVoxCore.raycastWithEndpointsSimpleVolumeuint8(self.vol, PolyVoxCore.Vector3Dfloat(0,0,0), PolyVoxCore.Vector3Dfloat(31,31,31), test_functor), 1)
+		self.assertEqual(PolyVoxCore.raycastWithEndpointsRawVolumeuint8(self.vol, PolyVoxCore.Vector3Dfloat(0,0,0), PolyVoxCore.Vector3Dfloat(31,31,31), test_functor), 1)
 	
 	def test_miss_voxel(self):
-		self.assertEqual(PolyVoxCore.raycastWithEndpointsSimpleVolumeuint8(self.vol, PolyVoxCore.Vector3Dfloat(0,0,0), PolyVoxCore.Vector3Dfloat(0,31,31), test_functor), 0)
+		self.assertEqual(PolyVoxCore.raycastWithEndpointsRawVolumeuint8(self.vol, PolyVoxCore.Vector3Dfloat(0,0,0), PolyVoxCore.Vector3Dfloat(0,31,31), test_functor), 0)
 
 if __name__ == '__main__':
 	unittest.main()

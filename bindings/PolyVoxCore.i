@@ -94,5 +94,5 @@ EXTRACTOR(shortname, RawVolume)
 %include "SurfaceMesh.i"
 %include "MarchingCubesSurfaceExtractor.i"
 %include "CubicSurfaceExtractor.i"
-//%include "Raycast.i"
+%include "Raycast.i"
 //%include "Picking.i"

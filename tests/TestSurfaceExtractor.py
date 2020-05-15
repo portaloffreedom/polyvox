@@ -24,8 +24,7 @@
 ################################################################################
 
 import sys
-sys.path.append("../library/bindings/")
-
+import os
 import unittest
 
 class TestSurfaceExtractor(unittest.TestCase):
@@ -34,12 +33,11 @@ class TestSurfaceExtractor(unittest.TestCase):
 		
 		#Create a small volume
 		r = PolyVoxCore.Region(PolyVoxCore.Vector3Dint32_t(0,0,0), PolyVoxCore.Vector3Dint32_t(31,31,31))
-		vol = PolyVoxCore.SimpleVolumeuint8(r)
+		vol = PolyVoxCore.RawVolumeuint8(r)
 		#Set one single voxel to have a reasonably high density
-		vol.setVoxelAt(PolyVoxCore.Vector3Dint32_t(5, 5, 5), 200)
-		self.mesh = PolyVoxCore.SurfaceMeshPositionMaterialNormal()
-		extractor = PolyVoxCore.MarchingCubesSurfaceExtractorSimpleVolumeuint8(vol, r, self.mesh)
-		extractor.execute()
+		vol.setVoxel(PolyVoxCore.Vector3Dint32_t(5, 5, 5), 200)
+		mesh = PolyVoxCore.extractMarchingCubesMesh_RawVolume_u8(vol, r)
+		self.mesh = PolyVoxCore.decodeMeshMarchingCubes_u8_u32(mesh)
 	
 	def test_num_vertices(self):
 		self.assertEqual(self.mesh.getNoOfVertices(), 6)
