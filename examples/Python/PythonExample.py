@@ -25,13 +25,13 @@
 ################################################################################
 
 import sys
-sys.path.append("../../library/bindings/") #This is just to point to the generated bindings
+sys.path.append("../../bindings/") #This is just to point to the generated bindings
 
 import PolyVoxCore as pv
 
 #Create a 64x64x64 volume of integers
 r = pv.Region(pv.Vector3Dint32_t(0,0,0), pv.Vector3Dint32_t(63,63,63))
-vol = pv.SimpleVolumeuint8(r)
+vol = pv.RawVolumeuint8(r)
 
 #Now fill the volume with our data (a sphere)
 v3dVolCenter = pv.Vector3Dint32_t(vol.getWidth() // 2, vol.getHeight() // 2, vol.getDepth() // 2)
@@ -51,22 +51,29 @@ for z in range(vol.getDepth()):
 				uVoxelValue = 0
 			
 			#Write the voxel value into the volume
-			vol.setVoxelAt(x, y, z, uVoxelValue);
+			vol.setVoxel(x, y, z, uVoxelValue)
 
-#Create a mesh, pass it to the extractor and generate the mesh
-mesh = pv.SurfaceMeshPositionMaterialNormal()
-extractor = pv.CubicSurfaceExtractorWithNormalsSimpleVolumeuint8(vol, r, mesh)
-extractor.execute()
+# Extract the surface for the specified region of the volume. Uncomment the line for the kind of surface extraction you want to see.
+#mesh = pv.extractCubicMesh_RawVolume_u8(vol, vol.getEnclosingRegion())
+mesh = pv.extractMarchingCubesMesh_RawVolume_u8(vol, vol.getEnclosingRegion())
+
+# The surface extractor outputs the mesh in an efficient compressed format which is not directly suitable for rendering. The easiest approach is to 
+# decode this on the CPU as shown below, though more advanced applications can upload the compressed mesh to the GPU and decompress in shader code.
+#mesh = pv.decodeMeshCubic_u8_u32(mesh)
+mesh = pv.decodeMeshMarchingCubes_u8_u32(mesh)
 
 #That's all of the PolyVox generation done, now to convert the output to something OpenGL can read efficiently
 
 import numpy as np
 
-indices = np.array(mesh.getIndices(), dtype='uint32') #Throw in the vertex indices into an array
+indices = [ mesh.getIndex(i) for i in range(0, mesh.getNoOfIndices()) ]
+
+indices = np.array(indices, dtype='uint32') #Throw in the vertex indices into an array
 #The vertices and normals are placed in an interpolated array like [vvvnnn,vvvnnn,vvvnnn]
-vertices = np.array([[vertex.getPosition().getX(), vertex.getPosition().getY(), vertex.getPosition().getZ(),
-                      vertex.getNormal().getX(), vertex.getNormal().getY(), vertex.getNormal().getZ()]
-                      for vertex in mesh.getVertices()],
+vertices = [mesh.getVertex(i) for i in range(0, mesh.getNoOfVertices())]
+vertices = np.array([[vertex.position.x, vertex.position.y, vertex.position.z,
+                      vertex.normal.x, vertex.normal.y, vertex.normal.z]
+                      for vertex in vertices],
                     dtype='f')
 
 #Now that we have our data, everything else here is just OpenGL
